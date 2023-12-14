@@ -8,21 +8,18 @@ import {
   ThemeProvider,
   createTheme,
   CssBaseline,
-  Chip,
 } from "@mui/material";
 import { styled } from "@mui/system";
-// import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
+import Alert from "@mui/material/Alert";
 
-// Create a dark theme
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#64B5F6", // Adjust the primary color as needed
+      main: "#64B5F6",
     },
     secondary: {
-      main: "#FF8F00", // Adjust the secondary color as needed
+      main: "#FF8F00",
     },
   },
 });
@@ -41,6 +38,16 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   alignItems: "center",
   marginBottom: theme.spacing(4),
   padding: theme.spacing(4),
+}));
+
+const WordListContainer = styled("div")(({ theme }) => ({
+  overflowY: "auto",
+  maxHeight: "150px",
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "flex-start",
+  gap: theme.spacing(1),
 }));
 
 const StyledTextField = styled(TextField)({
@@ -111,30 +118,26 @@ const TypingGame = () => {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <StyledContainer>
-        <StyledPaper elevation={3}>
-          <Typography variant='h4' color='primary'>
-            Typing Game
-          </Typography>
-          <Typography variant='body1' color='primary'>
-            Score: {score}
-          </Typography>
-          <Typography variant='body1' color='primary'>
-            Time Remaining: {timeRemaining}s
-          </Typography>
-        </StyledPaper>
-        <Stack spacing={1} direction={"row"}>
+        <Typography variant='h4' color='primary' style={{ marginBottom: 20 }}>
+          Typing Game
+        </Typography>
+        <Typography variant='body1' color='primary'>
+          Score: {score}
+        </Typography>
+        <Typography
+          variant='body1'
+          color='primary'
+          style={{ marginBottom: 20 }}>
+          Time Remaining: {timeRemaining}s
+        </Typography>
+
+        <WordListContainer spacing={1} direction={"row"}>
           {wordList.map((item, index) => (
-            <Button
-              key={index}
-              // variant='outlined'x
-              style={{
-                color: item.isCorrect ? "success" : "error",
-              }}>
+            <Alert key={index} severity={item.isCorrect ? "success" : "error"}>
               {item.word}
-              {""}
-            </Button>
+            </Alert>
           ))}
-        </Stack>
+        </WordListContainer>
         <Button variant='contained' style={{ color: "contained" }}>
           {currentWord}
         </Button>
@@ -147,7 +150,7 @@ const TypingGame = () => {
         />
         <StyledButton
           variant='contained'
-          color='primary'
+          color='secondary'
           onClick={handleRestart}>
           Restart
         </StyledButton>
